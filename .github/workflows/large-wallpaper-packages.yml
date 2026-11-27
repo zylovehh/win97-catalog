@@ -19,8 +19,8 @@ jobs:
 
       - name: Download and verify large packages
         env:
-          SILVER_URL: https://aka.doubaocdn.com/s/6ScUUXHzVi
-          TENGYIN_URL: https://aka.doubaocdn.com/s/JVGUSngAHD
+          SILVER_URL: https://aka.doubaocdn.com/s/sqTmo6NJUC
+          TENGYIN_URL: https://aka.doubaocdn.com/s/DcZsABDSxK
         run: |
           set -euxo pipefail
           mkdir -p wallpapers
