@@ -1,6 +1,10 @@
 name: update-wallpaper-catalogs
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update-wallpaper-catalogs.yml
   workflow_dispatch:
 
 permissions:
