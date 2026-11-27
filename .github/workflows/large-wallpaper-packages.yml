@@ -1,0 +1,42 @@
+name: large-wallpaper-packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/large-wallpaper-packages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  commit-large-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download and verify large packages
+        env:
+          SILVER_URL: https://aka.doubaocdn.com/s/6ScUUXHzVi
+          TENGYIN_URL: https://aka.doubaocdn.com/s/JVGUSngAHD
+        run: |
+          set -euxo pipefail
+          mkdir -p wallpapers
+          curl -L --fail --retry 3 -o wallpapers/silver-wing-night.tendies "$SILVER_URL"
+          curl -L --fail --retry 3 -o wallpapers/tengyin-jianqing.tendies "$TENGYIN_URL"
+          sha256sum -c <<'EOF'
+          6664cbabb6293aa098eb16764d5cb3b52ee943ed84c2b9ddd03487c5a03d2be9  wallpapers/silver-wing-night.tendies
+          dd16121bb211816e26451755cbe633dad225e34a8a1817d34ba41b3be75fd587  wallpapers/tengyin-jianqing.tendies
+          EOF
+
+      - name: Commit large packages
+        run: |
+          git config user.name "zylovehh"
+          git config user.email "116480868+zylovehh@users.noreply.github.com"
+          git add wallpapers/*.tendies
+          if ! git diff --cached --quiet; then
+            git commit -m "Add large wallpaper packages"
+            git push
+          fi
