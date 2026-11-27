@@ -24,8 +24,8 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p wallpapers
-          curl -L --fail --retry 3 -o wallpapers/silver-wing-night.tendies "$SILVER_URL"
-          curl -L --fail --retry 3 -o wallpapers/tengyin-jianqing.tendies "$TENGYIN_URL"
+          curl --http1.1 -L --fail --retry 5 --retry-all-errors --retry-delay 2 --connect-timeout 20 --max-time 300 -o wallpapers/silver-wing-night.tendies "$SILVER_URL"
+          curl --http1.1 -L --fail --retry 5 --retry-all-errors --retry-delay 2 --connect-timeout 20 --max-time 300 -o wallpapers/tengyin-jianqing.tendies "$TENGYIN_URL"
           sha256sum -c <<'EOF'
           6664cbabb6293aa098eb16764d5cb3b52ee943ed84c2b9ddd03487c5a03d2be9  wallpapers/silver-wing-night.tendies
           dd16121bb211816e26451755cbe633dad225e34a8a1817d34ba41b3be75fd587  wallpapers/tengyin-jianqing.tendies
